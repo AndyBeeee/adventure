@@ -86,15 +86,32 @@
 
     function printToOutput(message) {
       const outputElement = document.getElementById('gameOutput');
+      message = message.split('. ').join('.<br>');
       outputElement.innerHTML += '<p>' + message + '</p>';
       outputElement.scrollTop = outputElement.scrollHeight;
     }
 
-    document.getElementById('submitCommand').addEventListener('click', function() {
-      const userCommand = document.getElementById('gameInput').value.toLowerCase();
-      document.getElementById('gameInput').value = '';
-      processCommand(userCommand);
-    });
+    function resetGame() {
+    office = {
+    cabinetOpened: false,
+    binOpened: false,
+    hasFish: false,
+    cat: 'inCabinet',
+    safeOpened: false,
+    coffeeMachinePlugged: false,
+    hasCoffee: false
+    };
+
+  const outputElement = document.getElementById('gameOutput');
+  outputElement.innerHTML = '';
+  printToOutput('You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
+}
+
+  document.getElementById('submitCommand').addEventListener('click', function() {
+    const userCommand = document.getElementById('gameInput').value.toLowerCase();
+    document.getElementById('gameInput').value = '';
+    processCommand(userCommand);
+  });
 
 
     function processCommand(command) {
@@ -146,9 +163,9 @@
         }
       } else if (examineSocketCommands.includes(command)) {
         printToOutput('It looks like a nice plug socket. Maybe you should lick it?');
-      } else if (touchSocketCommands.includes(command)) {
-        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.');
-        startGame();
+      } else   if (touchSocketCommands.includes(command)) {
+        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.<br><br>');
+        resetGame();
       } else if (examineVelCommands.includes(command)) {
         printToOutput('Vel seems sad but is busy coding.');
       } else if (talkToVelCommands.includes(command)) {
