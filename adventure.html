@@ -83,6 +83,9 @@
     const interactComputerCommands = ['examine computer', 'use computer', 'open computer', 'start computer'];
     const talkToKevCommands = ['talk to Kev', 'speak to Kev', 'unmute Kev', 'talk to kev', 'speak to kev', 'unmute kev'];
     const typeComputerCommands = ['type on computer', 'use keyboard'];
+    const openWindowCommands = ['open window'];
+    const leanOutWindowCommands = ['lean out window', 'look out window'];
+    const eatFishCommands = ['eat fish'];
 
     function printToOutput(message) {
       const outputElement = document.getElementById('gameOutput');
@@ -91,8 +94,8 @@
       outputElement.scrollTop = outputElement.scrollHeight;
     }
 
-    function resetGame() {
-    office = {
+    function resetGame(gameOverMessage) {
+  office = {
     cabinetOpened: false,
     binOpened: false,
     hasFish: false,
@@ -100,11 +103,10 @@
     safeOpened: false,
     coffeeMachinePlugged: false,
     hasCoffee: false
-    };
-
+  };
   const outputElement = document.getElementById('gameOutput');
   outputElement.innerHTML = '';
-  printToOutput('You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
+  printToOutput(gameOverMessage + '<br><br>' + 'You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
 }
 
   document.getElementById('submitCommand').addEventListener('click', function() {
@@ -154,7 +156,17 @@
         } else {
           printToOutput('There is no cat to pick up.');
         }
-      } else if (giveCatToVelCommands.includes(command)) {
+      } else if (openWindowCommands.includes(command)) {
+          printToOutput('You open the window. You feel a cool breeze on your face. Maybe you should lean out the window?');
+        } else if (leanOutWindowCommands.includes(command)) {
+          resetGame('You lean as far as you can out the window, lose your grip, fall to the ground and die. That was a stupid thing to do! Game over.');
+        } else if (eatFishCommands.includes(command)) {
+          if (office.hasFish) {
+            resetGame('You eat the mouldy fish, immediately feel unwell, collapse on the floor and die. Don\'t eat things from a bin. That was a stupid thing to do! Game over.');
+          } else {
+            printToOutput('What fish? Maybe you should look around.');
+          }
+        } else if (giveCatToVelCommands.includes(command)) {
         if (office.cat === 'inHands') {
           printToOutput('You give the cat to Vel. She smiles and tells you that the first two digits of the safe code are \'14\'.');
           office.cat = 'withVel';
@@ -164,9 +176,8 @@
       } else if (examineSocketCommands.includes(command)) {
         printToOutput('It looks like a nice plug socket. Maybe you should lick it?');
       } else   if (touchSocketCommands.includes(command)) {
-        resetGame();
-        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.<br><br>');
-      } else if (examineVelCommands.includes(command)) {
+        resetGame('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.');
+        } else if (examineVelCommands.includes(command)) {
         printToOutput('Vel seems sad but is busy coding.');
       } else if (talkToVelCommands.includes(command)) {
         if (office.cat === 'withVel') {
