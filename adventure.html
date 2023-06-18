@@ -6,35 +6,49 @@
     body {
       background-color: black;
       color: white;
-      font-size: 1.5em;
+      font-size: 2em;
       font-family: monospace;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     #gameOutput {
-      height: 400px;
+      height: 300px;
       overflow: auto;
       border: 1px solid #fff;
       padding: 10px;
       margin-bottom: 10px;
+      width: 80%;
+      box-sizing: border-box;
     }
     #gameInput {
       width: 80%;
-      padding: 5px;
+      padding: 10px;
+      font-size: 1em;
     }
     #submitCommand {
       padding: 5px 10px;
+    }
+    pre {
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <pre>
-  _____     _          _    _             
- |_   _|   | |        | |  (_)            
-   | |  ___| |_   ___ | |_  _   __ _  _ __
-   | | / _ \ | | / _ \| __|| | / _` || '__|
-  _| ||  __/ | ||  __/| |_ | || (_| || |   
- |_____\___|\__|\___| \__||_| \__,_||_|   
+  _   _       _                          
+ | \ | |     | |                         
+ |  \| | ___ | |_   _  __ _ _ __   __ _  
+ | . ` |/ _ \| | | | |/ _` | '_ \ / _` | 
+ | |\  | (_) | | |_| | (_| | | | | (_| | 
+ \_| \_/\___/|_|\__,_|\__, |_| |_|\__,_| 
+                       __/ |              
+                      |___/   
   </pre>
-  <div id="gameOutput"></div>
+  <div id="gameOutput">You are in an office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.</div>
   <input type="text" id="gameInput" placeholder="Enter your command here">
   <button id="submitCommand">Submit</button>
 
@@ -63,34 +77,23 @@
     const talkToVelCommands = ['talk to Vel', 'speak to Vel', 'talk to vel', 'speak to vel'];
     const openFridgeCommands = ['open fridge'];
     const useCoffeeMachineCommands = ['use coffee machine', 'make coffee'];
-    const plugInCoffeeMachineCommands = ['plug in coffee machine'];
+    const plugInCoffeeMachineCommands = ['plug in coffee machine', 'connect coffee machine'];
     const drinkCoffeeCommands = ['drink coffee'];
-    const interactComputerCommands = ['examine computer', 'look at computer', 'use computer'];
+    const interactComputerCommands = ['use computer', 'open computer', 'start computer'];
     const talkToKevCommands = ['talk to Kev', 'speak to Kev', 'unmute Kev', 'talk to kev', 'speak to kev', 'unmute kev'];
     const typeComputerCommands = ['type on computer', 'use keyboard'];
 
     function printToOutput(message) {
-      document.getElementById('gameOutput').innerHTML += '<p>' + message + '</p>';
-      document.getElementById('gameOutput').scrollTop = document.getElementById('gameOutput').scrollHeight;
-    }
-
-    function startGame() {
-      office = {
-        cabinetOpened: false,
-        binOpened: false,
-        hasFish: false,
-        cat: 'inCabinet',
-        safeOpened: false,
-        coffeeMachinePlugged: false,
-        hasCoffee: false
-      };
-
-      printToOutput('You are in an office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
+      const outputElement = document.getElementById('gameOutput');
+      outputElement.innerHTML += '<p>' + message + '</p>';
+      outputElement.scrollTop = outputElement.scrollHeight;
     }
 
     document.getElementById('submitCommand').addEventListener('click', function() {
       const userCommand = document.getElementById('gameInput').value.toLowerCase();
       document.getElementById('gameInput').value = '';
+      processCommand(userCommand);
+    });
 
       processCommand(userCommand);
     });
