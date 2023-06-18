@@ -1,224 +1,121 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Text Adventure Game</title>
-  <style>
-    body {
-      background-color: black;
-      color: white;
-      font-size: 2em;
-      font-family: monospace;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    #gameOutput {
-      height: 300px;
-      overflow: auto;
-      border: 1px solid #fff;
-      padding: 10px;
-      margin: 10px;
-      width: 78%;
-      box-sizing: border-box;
-    }
-    #gameInput {
-      width: 50%;
-      padding: 10px;
-      font-size: 1em;
-      margin: 10px;
-    }
-    #submitCommand {
-      padding: 10px 20px;
-      font-size: 1.3em;
-      margin-top: 10px;
-    }
-    pre {
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <pre>
-     _   _   ____      _        _                     _                     
-    | \ | | / ___|    / \    __| |__   __ ___  _ __  | |_  _   _  _ __  ___ 
-    |  \| || |       / _ \  / _` |\ \ / // _ \| '_ \ | __|| | | || '__|/ _ \
-    | |\  || |___   / ___ \| (_| | \ V /|  __/| | | || |_ | |_| || |  |  __/
-    |_| \_| \____| /_/   \_\\__,_|  \_/  \___||_| |_| \__| \__,_||_|   \___|
+<button id="submitCommand">Submit</button>
 
-  </pre>
-  <div id="gameOutput">You are in the NorthCoders office. 
-    There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.</div>
-  <input type="text" id="gameInput" placeholder="Enter your command here">
-  <button id="submitCommand">Submit</button>
-  <script>
-    let office = {
-      cabinetOpened: false,
-      binOpened: false,
-      hasFish: false,
-      cat: 'inCabinet',
-      safeOpened: false,
-      coffeeMachinePlugged: false,
-      hasCoffee: false
-    };
-
-    const lookCommands = ['look around', 'look', 'examine', 'look at', 'examine office', 'search', 'search office'];
-    const openCabinetCommands = ['open cabinet', 'open filing cabinet', 'open drawer', 'pull drawer'];
-    const openBinCommands = ['open bin', 'look in bin', 'search bin'];
-    const getFishCommands = ['get fish', 'pick up fish', 'take fish'];
-    const giveFishCommands = ['give fish to cat', 'feed cat', 'offer fish to cat'];
-    const getCatCommands = ['get cat', 'pick up cat', 'take cat'];
-    const openSafeCommands = ['open safe', 'unlock safe'];
-    const giveCatToVelCommands = ['give cat to Vel', 'offer cat to Vel', 'give cat to vel', 'offer cat to vel'];
-    const examineSocketCommands = ['examine socket', 'examine plug socket', 'look at plug socket', 'look at socket'];
-    const touchSocketCommands = ['touch socket', 'lick socket', 'lick plug socket', 'touch plug socket'];
-    const examineVelCommands = ['examine Vel', 'look at Vel', 'examine vel', 'look at vel'];
-    const talkToVelCommands = ['talk to Vel', 'speak to Vel', 'talk to vel', 'speak to vel'];
-    const openFridgeCommands = ['open fridge'];
-    const useCoffeeMachineCommands = ['use coffee machine', 'make coffee'];
-    const plugInCoffeeMachineCommands = ['plug in coffee machine', 'connect coffee machine'];
-    const drinkCoffeeCommands = ['drink coffee', 'get coffee'];
-    const interactComputerCommands = ['examine computer', 'use computer', 'open computer', 'start computer'];
-    const talkToKevCommands = ['talk to Kev', 'speak to Kev', 'unmute Kev', 'talk to kev', 'speak to kev', 'unmute kev'];
-    const typeComputerCommands = ['type on computer', 'use keyboard'];
-    const openWindowCommands = ['open window'];
-    const leanOutWindowCommands = ['lean out window', 'look out window'];
-    const eatFishCommands = ['eat fish'];
-
-    function printToOutput(message) {
-      const outputElement = document.getElementById('gameOutput');
-      message = message.split('. ').join('.<br>');
-      outputElement.innerHTML += '<p>' + message + '</p>';
-      outputElement.scrollTop = outputElement.scrollHeight;
-    }
-
-    function resetGame(gameOverMessage) {
-  office = {
-    cabinetOpened: false,
+<script>
+  let office = {
+    filingCabinetOpened: false,
     binOpened: false,
-    hasFish: false,
-    cat: 'inCabinet',
-    safeOpened: false,
-    coffeeMachinePlugged: false,
-    hasCoffee: false
+    fridgeOpened: false,
+    hasMilk: false,
+    windowOpened: false,
+    hasCoffee: false,
+    coffeeWithMilk: false,
+    safeOpened: false
   };
-  const outputElement = document.getElementById('gameOutput');
-  outputElement.innerHTML = '';
-  printToOutput(gameOverMessage + '<br><br>' + 'You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
-}
+
+  const openFilingCabinetCommands = ['open filing cabinet'];
+  const openBinCommands = ['open bin'];
+  const eatFishCommands = ['eat fish', 'consume fish'];
+  const openFridgeCommands = ['open fridge'];
+  const getMilkCommands = ['get milk', 'take milk', 'pick up milk'];
+  const addMilkCommands = ['add milk to coffee', 'put milk in coffee', 'use milk'];
+  const makeCoffeeCommands = ['make coffee', 'brew coffee'];
+  const drinkCoffeeCommands = ['drink coffee', 'consume coffee'];
+  const openSafeCommands = ['open safe'];
+  const openWindowCommands = ['open window'];
+  const leanOutWindowCommands = ['lean out window', 'look out window'];
+
+  function resetGame(gameOverMessage) {
+    office = {
+      filingCabinetOpened: false,
+      binOpened: false,
+      fridgeOpened: false,
+      hasMilk: false,
+      windowOpened: false,
+      hasCoffee: false,
+      coffeeWithMilk: false,
+      safeOpened: false
+    };
+    const outputElement = document.getElementById('gameOutput');
+    outputElement.innerHTML = '';
+    document.getElementById('submitCommand').textContent = 'Submit';
+    printToOutput(gameOverMessage);
+  }
 
   document.getElementById('submitCommand').addEventListener('click', function() {
-    const userCommand = document.getElementById('gameInput').value.toLowerCase();
-    document.getElementById('gameInput').value = '';
-    processCommand(userCommand);
+    const command = document.getElementById('commandInput').value;
+    document.getElementById('commandInput').value = '';
+
+    if (this.textContent === 'Restart') {
+      resetGame('You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a window, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
+      this.textContent = 'Submit';
+    } else {
+      processCommand(command.toLowerCase());
+    }
   });
 
-
-    function processCommand(command) {
-      if (lookCommands.includes(command)) {
-        printToOutput('You see a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
-      } else if (openCabinetCommands.includes(command)) {
-        office.cabinetOpened = true;
-        if (office.cat === 'inCabinet') {
-          office.cat = 'angry';
-          printToOutput('You open the filing cabinet. An angry cat jumps out!');
-        } else {
-          printToOutput('You open the filing cabinet. It is empty.');
-        }
-      } else if (openBinCommands.includes(command)) {
-        office.binOpened = true;
-        printToOutput('You open the bin. It contains some smelly food leftovers including fish.');
-      } else if (getFishCommands.includes(command)) {
-        if (office.binOpened) {
-          office.hasFish = true;
-          printToOutput('You pick up the fish. It\'s smelly but maybe it can be of use.');
-        } else {
-          printToOutput('What fish? Maybe you should look around.');
-        }
-      } else if (giveFishCommands.includes(command)) {
-        if (office.hasFish && office.cat === 'angry') {
-          office.cat = 'happy';
-          printToOutput('You give the fish to the cat. It seems happy now.');
-          office.hasFish = false;
-        } else if (office.hasFish && office.cat !== 'angry') {
-          printToOutput('The cat is not interested in more fish.');
-        } else {
-          printToOutput('You don\'t have any fish to give.');
-        }
-      } else if (getCatCommands.includes(command)) {
-        if (office.cat === 'happy') {
-          printToOutput('The cat lets you pick it up.');
-          office.cat = 'inHands';
-        } else if (office.cat === 'angry') {
-          printToOutput('The cat scratches you! Maybe it\'s hungry.');
-        } else {
-          printToOutput('There is no cat to pick up.');
-        }
-      } else if (openWindowCommands.includes(command)) {
-          printToOutput('You open the window. You feel a cool breeze on your face. Maybe you should lean out the window?');
-        } else if (leanOutWindowCommands.includes(command)) {
-          resetGame('You lean as far as you can out the window, lose your grip, fall to the ground and die. That was a stupid thing to do! Game over.');
-        } else if (eatFishCommands.includes(command)) {
-          if (office.hasFish) {
-            resetGame('You eat the mouldy fish, immediately feel unwell, collapse on the floor and die. Don\'t eat things from a bin. That was a stupid thing to do! Game over.');
-          } else {
-            printToOutput('What fish? Maybe you should look around.');
-          }
-        } else if (giveCatToVelCommands.includes(command)) {
-        if (office.cat === 'inHands') {
-          printToOutput('You give the cat to Vel. She smiles and tells you that the first two digits of the safe code are \'14\'.');
-          office.cat = 'withVel';
-        } else {
-          printToOutput('You do not have the cat.');
-        }
-      } else if (examineSocketCommands.includes(command)) {
-        printToOutput('It looks like a nice plug socket. Maybe you should lick it?');
-      } else   if (touchSocketCommands.includes(command)) {
-        resetGame('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.');
-        } else if (examineVelCommands.includes(command)) {
-        printToOutput('Vel seems sad but is busy coding.');
-      } else if (talkToVelCommands.includes(command)) {
-        if (office.cat === 'withVel') {
-          printToOutput('Vel is too busy playing with the cat and doesn\'t reply.');
-        } else {
-          printToOutput('Vel seems busy with her coding and doesn\'t reply.');
-        }
-      } else if (openSafeCommands.includes(command)) {
-        printToOutput('The safe is locked. You need a six digit code.');
-      } else if (openFridgeCommands.includes(command)) {
-        printToOutput('You open the fridge. It is empty.');
-      } else if (useCoffeeMachineCommands.includes(command)) {
-        if (office.coffeeMachinePlugged) {
-          office.hasCoffee = true;
-          printToOutput('The coffee machine whirs to life and produces a cup of coffee.');
-        } else {
-          printToOutput('The coffee machine isn\'t plugged in.');
-        }
-      } else if (plugInCoffeeMachineCommands.includes(command)) {
-        office.coffeeMachinePlugged = true;
-        printToOutput('You plug in the coffee machine. It\'s ready to use now.');
-      } else if (drinkCoffeeCommands.includes(command)) {
-        if (office.hasCoffee) {
-          printToOutput('You drink the coffee. It makes you happy.');
-          office.hasCoffee = false;
-        } else {
-          printToOutput('There is no coffee to drink.');
-        }
-      } else if (interactComputerCommands.includes(command)) {
-        printToOutput('You see a man named Kev on a Zoom call on the computer screen.');
-      } else if (talkToKevCommands.includes(command)) {
-        printToOutput('Kev can\'t hear you. He seems to be on a Zoom call.');
-      } else if (typeComputerCommands.includes(command)) {
-        printToOutput('You can\'t, you are too tired and hungry, maybe there is another way to message him?');
-      } else if (command.startsWith('examine ') || command.startsWith('look at ')) {
-        printToOutput(`It's just a normal ${command.split(' ').slice(1).join(' ')}.`);
+  function processCommand(command) {
+    if (openFilingCabinetCommands.includes(command)) {
+      office.filingCabinetOpened = true;
+      printToOutput('You open the filing cabinet. It is empty.');
+    } else if (openBinCommands.includes(command)) {
+      office.binOpened = true;
+      printToOutput('You open the bin. There is a mouldy fish inside.');
+    } else if (eatFishCommands.includes(command)) {
+      if (office.binOpened) {
+        resetGame('You eat the mouldy fish, immediately feel unwell, collapse on the floor and die. Don\'t eat things from a bin. That was a stupid thing to do!');
+        document.getElementById('submitCommand').textContent = 'Restart';
       } else {
-        printToOutput(`It's just a normal ${command}.`);
+        printToOutput('What fish? Maybe you should look around.');
       }
+    } else if (openFridgeCommands.includes(command)) {
+      office.fridgeOpened = true;
+      printToOutput('You open the fridge. There is a bottle of milk inside.');
+    } else if (getMilkCommands.includes(command)) {
+      if (office.fridgeOpened) {
+        office.hasMilk = true;
+        printToOutput('You take the milk from the fridge.');
+      } else {
+        printToOutput('What milk? Maybe you should look around.');
+      }
+    } else if (addMilkCommands.includes(command)) {
+      if (office.hasMilk && office.hasCoffee) {
+        office.coffeeWithMilk = true;
+        printToOutput('You add milk to the coffee.');
+      } else {
+        printToOutput('You can\'t add milk to the coffee without having both the milk and coffee first.');
+      }
+    } else if (makeCoffeeCommands.includes(command)) {
+      office.hasCoffee = true;
+      printToOutput('You make a cup of black coffee.');
+    } else if (drinkCoffeeCommands.includes(command)) {
+      if (office.coffeeWithMilk) {
+        printToOutput('You drink the coffee. It tastes wonderful.');
+      } else if (office.hasCoffee) {
+        printToOutput('You can\'t drink black coffee! Are you a psychopath?');
+      } else {
+        printToOutput('What coffee? Maybe you should look around.');
+      }
+    } else if (openSafeCommands.includes(command)) {
+      office.safeOpened = true;
+      printToOutput('You open the safe. It is empty.');
+    } else if (openWindowCommands.includes(command)) {
+      office.windowOpened = true;
+      printToOutput('You open the window. You feel a cool breeze on your face. Maybe you should lean out the window?');
+    } else if (leanOutWindowCommands.includes(command)) {
+      if (office.windowOpened) {
+        resetGame('You lean as far as you can out the window, lose your grip, fall to the ground and die. That was a stupid thing to do!');
+        document.getElementById('submitCommand').textContent = 'Restart';
+      } else {
+        printToOutput('What window? Maybe you should look around.');
+      }
+    } else {
+      printToOutput('I\'m not sure what you\'re trying to do. Please try another command.');
     }
+  }
 
-  </script>
-</body>
-</html>
+  function printToOutput(message) {
+    const outputElement = document.getElementById('gameOutput');
+    outputElement.innerHTML += message + '<br/><br/>';
+    outputElement.scrollTop = outputElement.scrollHeight;
+  }
+</script>
