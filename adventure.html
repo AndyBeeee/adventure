@@ -3,16 +3,37 @@
 <head>
   <title>Text Adventure Game</title>
   <style>
+    body {
+      background-color: black;
+      color: white;
+      font-size: 1.5em;
+      font-family: monospace;
+    }
     #gameOutput {
       height: 400px;
       overflow: auto;
-      border: 1px solid #000;
+      border: 1px solid #fff;
       padding: 10px;
       margin-bottom: 10px;
+    }
+    #gameInput {
+      width: 80%;
+      padding: 5px;
+    }
+    #submitCommand {
+      padding: 5px 10px;
     }
   </style>
 </head>
 <body>
+  <pre>
+  _____     _          _    _             
+ |_   _|   | |        | |  (_)            
+   | |  ___| |_   ___ | |_  _   __ _  _ __
+   | | / _ \ | | / _ \| __|| | / _` || '__|
+  _| ||  __/ | ||  __/| |_ | || (_| || |   
+ |_____\___|\__|\___| \__||_| \__,_||_|   
+  </pre>
   <div id="gameOutput"></div>
   <input type="text" id="gameInput" placeholder="Enter your command here">
   <button id="submitCommand">Submit</button>
@@ -45,13 +66,12 @@
     const plugInCoffeeMachineCommands = ['plug in coffee machine'];
     const drinkCoffeeCommands = ['drink coffee'];
     const interactComputerCommands = ['examine computer', 'look at computer', 'use computer'];
-    const talkToKevCommands = ['unmute Kev', 'talk to Kev', 'speak to Kev', 'unmute kev', 'talk to kev', 'speak to kev'];
-    const typeComputerCommands = ['type on computer'];
+    const talkToKevCommands = ['talk to Kev', 'speak to Kev', 'unmute Kev', 'talk to kev', 'speak to kev', 'unmute kev'];
+    const typeComputerCommands = ['type on computer', 'use keyboard'];
 
-    function printToOutput(text) {
-      const gameOutput = document.getElementById('gameOutput');
-      gameOutput.innerHTML += text + '<br>';
-      gameOutput.scrollTop = gameOutput.scrollHeight; // auto-scroll to bottom
+    function printToOutput(message) {
+      document.getElementById('gameOutput').innerHTML += '<p>' + message + '</p>';
+      document.getElementById('gameOutput').scrollTop = document.getElementById('gameOutput').scrollHeight;
     }
 
     function startGame() {
@@ -64,7 +84,8 @@
         coffeeMachinePlugged: false,
         hasCoffee: false
       };
-      printToOutput('You are in an office. It has a filing cabinet, a bin, a fridge, a safe, a plug socket, and a coffee machine. There are some blank sheets of paper, computers, and Vel is here, too.');
+
+      printToOutput('You are in an office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
     }
 
     document.getElementById('submitCommand').addEventListener('click', function() {
@@ -119,22 +140,25 @@
           printToOutput('You give the cat to Vel. She smiles and tells you that the first two digits of the safe code are \'14\'.');
           office.cat = 'withVel';
         } else {
-          printToOutput('You don\'t have a cat to give.');
+          printToOutput('You do not have the cat.');
         }
-      } else if (openSafeCommands.includes(command)) {
-        printToOutput('Enter the six digit code: ');
-        // here you may want to implement a code input mechanism
       } else if (examineSocketCommands.includes(command)) {
         printToOutput('It looks like a nice plug socket. Maybe you should lick it.');
       } else if (touchSocketCommands.includes(command)) {
-        printToOutput('You touch the plug socket and are electrocuted! Game Over!');
+        printToOutput('You touch the plug socket and get electrocuted! Game over.');
         startGame();
       } else if (examineVelCommands.includes(command)) {
-        printToOutput('Vel looks sad. She is focused on her coding.');
+        printToOutput('Vel seems sad but is busy coding.');
       } else if (talkToVelCommands.includes(command)) {
-        printToOutput('Vel is too engrossed in her coding to reply.');
+        if (office.cat === 'withVel') {
+          printToOutput('Vel is too busy playing with the cat and doesn\'t reply.');
+        } else {
+          printToOutput('Vel seems busy with her coding and doesn\'t reply.');
+        }
+      } else if (openSafeCommands.includes(command)) {
+        printToOutput('The safe is locked. You need a six digit code.');
       } else if (openFridgeCommands.includes(command)) {
-        printToOutput('You open the fridge. It\'s empty.');
+        printToOutput('You open the fridge. It is empty.');
       } else if (useCoffeeMachineCommands.includes(command)) {
         if (office.coffeeMachinePlugged) {
           office.hasCoffee = true;
@@ -158,6 +182,8 @@
         printToOutput('Kev can\'t hear you. He seems to be on a Zoom call.');
       } else if (typeComputerCommands.includes(command)) {
         printToOutput('You can\'t, you are too tired and hungry, maybe there is another way to message him?');
+      } else if (command.startsWith('examine ') || command.startsWith('look at ')) {
+        printToOutput(`It's just a normal ${command.split(' ').slice(1).join(' ')}.`);
       } else {
         printToOutput(`It's just a normal ${command}.`);
       }
