@@ -25,12 +25,14 @@
       box-sizing: border-box;
     }
     #gameInput {
-      width: 80%;
+      width: 50%;
       padding: 10px;
       font-size: 1em;
+      margin-bottom: 10px;
     }
     #submitCommand {
-      padding: 5px 10px;
+      padding: 10px 20px;
+      font-size: 1.5em;
     }
     pre {
       text-align: center;
@@ -39,19 +41,17 @@
 </head>
 <body>
   <pre>
-  _   _       _                          
- | \ | |     | |                         
- |  \| | ___ | |_   _  __ _ _ __   __ _  
- | . ` |/ _ \| | | | |/ _` | '_ \ / _` | 
- | |\  | (_) | | |_| | (_| | | | | (_| | 
- \_| \_/\___/|_|\__,_|\__, |_| |_|\__,_| 
-                       __/ |              
-                      |___/   
+    _   _            _   _                   _                  ___      _                 _                  
+    | \ | |          | | | |                 | |                / _ \    | |               | |                 
+    |  \| | ___  _ __| |_| |__   ___ ___   __| | ___ _ __ ___  / /_\ \ __| |_   _____ _ __ | |_ _   _ _ __ ___ 
+    | . ` |/ _ \| '__| __| '_ \ / __/ _ \ / _` |/ _ \ '__/ __| |  _  |/ _` \ \ / / _ \ '_ \| __| | | | '__/ _ \
+    | |\  | (_) | |  | |_| | | | (_| (_) | (_| |  __/ |  \__ \ | | | | (_| |\ V /  __/ | | | |_| |_| | | |  __/
+    \_| \_/\___/|_|   \__|_| |_|\___\___/ \__,_|\___|_|  |___/ \_| |_/\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|
+                                                                                                                                                                                                                         
   </pre>
   <div id="gameOutput">You are in an office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.</div>
   <input type="text" id="gameInput" placeholder="Enter your command here">
   <button id="submitCommand">Submit</button>
-
   <script>
     let office = {
       cabinetOpened: false,
@@ -190,9 +190,6 @@
       }
     }
 
-    window.onload = function() {
-      startGame();
-    };
   </script>
 </body>
 </html>
