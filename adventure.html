@@ -72,15 +72,15 @@
     const getCatCommands = ['get cat', 'pick up cat', 'take cat'];
     const openSafeCommands = ['open safe', 'unlock safe'];
     const giveCatToVelCommands = ['give cat to Vel', 'offer cat to Vel', 'give cat to vel', 'offer cat to vel'];
-    const examineSocketCommands = ['examine socket', 'look at socket'];
-    const touchSocketCommands = ['touch socket', 'lick socket'];
+    const examineSocketCommands = ['examine socket', 'examine plug socket', 'look at plug socket', 'look at socket'];
+    const touchSocketCommands = ['touch socket', 'lick socket', 'lick plug socket', 'touch plug socket'];
     const examineVelCommands = ['examine Vel', 'look at Vel', 'examine vel', 'look at vel'];
     const talkToVelCommands = ['talk to Vel', 'speak to Vel', 'talk to vel', 'speak to vel'];
     const openFridgeCommands = ['open fridge'];
     const useCoffeeMachineCommands = ['use coffee machine', 'make coffee'];
     const plugInCoffeeMachineCommands = ['plug in coffee machine', 'connect coffee machine'];
-    const drinkCoffeeCommands = ['drink coffee'];
-    const interactComputerCommands = ['use computer', 'open computer', 'start computer'];
+    const drinkCoffeeCommands = ['drink coffee', 'get coffee'];
+    const interactComputerCommands = ['examine computer', 'use computer', 'open computer', 'start computer'];
     const talkToKevCommands = ['talk to Kev', 'speak to Kev', 'unmute Kev', 'talk to kev', 'speak to kev', 'unmute kev'];
     const typeComputerCommands = ['type on computer', 'use keyboard'];
 
@@ -145,9 +145,9 @@
           printToOutput('You do not have the cat.');
         }
       } else if (examineSocketCommands.includes(command)) {
-        printToOutput('It looks like a nice plug socket. Maybe you should lick it.');
+        printToOutput('It looks like a nice plug socket. Maybe you should lick it?');
       } else if (touchSocketCommands.includes(command)) {
-        printToOutput('You touch the plug socket and get electrocuted! Game over.');
+        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.');
         startGame();
       } else if (examineVelCommands.includes(command)) {
         printToOutput('Vel seems sad but is busy coding.');
