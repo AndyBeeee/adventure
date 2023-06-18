@@ -164,8 +164,8 @@
       } else if (examineSocketCommands.includes(command)) {
         printToOutput('It looks like a nice plug socket. Maybe you should lick it?');
       } else   if (touchSocketCommands.includes(command)) {
-        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.<br><br>');
         resetGame();
+        printToOutput('You lick the plug socket and get electrocuted! That was a really stupid thing to do. Game over.<br><br>');
       } else if (examineVelCommands.includes(command)) {
         printToOutput('Vel seems sad but is busy coding.');
       } else if (talkToVelCommands.includes(command)) {
