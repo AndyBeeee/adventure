@@ -61,10 +61,7 @@
       cat: 'inCabinet',
       safeOpened: false,
       coffeeMachinePlugged: false,
-      hasCoffee: false,
-      fridgeOpened: false,
-      hasMilk: false,
-      coffeeWithMilk: false
+      hasCoffee: false
     };
 
     const lookCommands = ['look around', 'look', 'examine', 'look at', 'examine office', 'search', 'search office'];
@@ -89,10 +86,6 @@
     const openWindowCommands = ['open window'];
     const leanOutWindowCommands = ['lean out window', 'look out window'];
     const eatFishCommands = ['eat fish'];
-    const openFridgeCommands = ['open fridge'];
-    const getMilkCommands = ['get milk', 'take milk', 'pick up milk'];
-    const addMilkCommands = ['add milk to coffee', 'put milk in coffee', 'use milk'];
-  
 
     function printToOutput(message) {
       const outputElement = document.getElementById('gameOutput');
@@ -110,15 +103,11 @@
     safeOpened: false,
     coffeeMachinePlugged: false,
     hasCoffee: false
-    fridgeOpened: false,
-    hasMilk: false,
-    coffeeWithMilk: false
-    };
-    const outputElement = document.getElementById('gameOutput');
-    outputElement.innerHTML = '';
-    document.getElementById('submitCommand').textContent = 'Submit';
-    printToOutput(gameOverMessage);
-  }
+  };
+  const outputElement = document.getElementById('gameOutput');
+  outputElement.innerHTML = '';
+  printToOutput(gameOverMessage + '<br><br>' + 'You are in the NorthCoders office. There is a filing cabinet, a bin, a fridge, a safe, a plug socket, a coffee machine, some blank sheets of paper, and computers. Vel is here, too.');
+}
 
   document.getElementById('submitCommand').addEventListener('click', function() {
     const userCommand = document.getElementById('gameInput').value.toLowerCase();
